@@ -1,6 +1,6 @@
 # speejson
 
-Around 50% faster than Jackson. From Java object -> json
+Around **50%** faster than Jackson. From Java object -> json
 
     {  
     	   "id":null,
