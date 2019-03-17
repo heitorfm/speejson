@@ -1,6 +1,6 @@
 # speejson
 
-Around **50%** faster than Jackson. From Java object -> json
+Around **100%** faster than Jackson. From Java object -> json
 
     {  
     	   "id":null,
@@ -17,4 +17,6 @@ Around **50%** faster than Jackson. From Java object -> json
 
 ## JACKSON => 66567 nanos | 66 micros | 0 millis
 
-## SPEEJSON => 42179 nanos  |  42 micros  |  0 millis
+## SPEEJSON => 29637 nanos  |  29 micros  |  0 millis
+## SPEEJSON => 32478 nanos  |  32 micros  |  0 millis
+## SPEEJSON => 33185 nanos  |  33 micros  |  0 millis
