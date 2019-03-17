@@ -11,9 +11,14 @@ public class JsonSyntax {
 	public static final byte[] COMMA = ",".getBytes();
 
 	public static final byte[] QUOTE = "\"".getBytes();
-	
+
 	public static final byte[] COLON = ":".getBytes();
 
 	public static final byte[] NULL = "null".getBytes();
+
+	
+	private JsonSyntax() {
+		throw new IllegalStateException("Utility class");
+	}
 	
 }

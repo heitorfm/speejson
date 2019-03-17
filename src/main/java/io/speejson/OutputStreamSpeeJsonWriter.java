@@ -28,7 +28,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 	@Override
 	public SpeeJsonWriter append(char c) {
 
-		byte[] bs = Character.valueOf(c).toString().getBytes();
+		byte[] bs = Character.toString(c).getBytes();
 		
 		try {
 			os.write(bs);

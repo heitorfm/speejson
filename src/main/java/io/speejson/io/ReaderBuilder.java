@@ -1,105 +1,102 @@
 package io.speejson.io;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.speejson.JsonSyntax;
 import io.speejson.Property;
 import io.speejson.bytefier.Bytefier;
 import io.speejson.bytefier.BytefiersHolder;
+import io.speejson.exception.InternalToolingInitializationException;
+import io.speejson.exception.ReflectionException;
+import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
+import javassist.NotFoundException;
 
 public class ReaderBuilder {
 
 	private static final Map<Class<?>, ObjectReader> readers = new HashMap<>();
+    
+    public ObjectReader getReader(Class<?> clazz) {
+    	
+    	ObjectReader reader = readers.computeIfAbsent(clazz, key -> build(clazz));
+    	
+    	return reader;
+    }
 	
+	public ObjectReader build(Class<?> clazz) {
 
-	
-	public static ObjectReader build(Class<?> clazz) {
+		ObjectReader reader = null;
 		
-		ObjectReader reader =  readers.get(clazz);
+		StringBuilder methBody = new StringBuilder("public Object read(Object obj, int idx) {");
+		methBody.append(clazz.getCanonicalName() + " pojo = (" + clazz.getCanonicalName() + ") obj;");
+		methBody.append("Object ret = null;");
 		
-		if(reader != null) return reader;
+		Field[] fields = clazz.getDeclaredFields();
 		
+		Property[] properties = new Property[fields.length];
+		int propsCnt = 0;
+		
+		for (int i = 0; i < fields.length; i++) {
+
+			Field field = fields[i];
+			
+			if(field.getName().equals("serialVersionUID")) continue;
+			
+			Bytefier<?> bytefier = BytefiersHolder.get(field.getType());
+			Property prop = new Property(field.getName(), assembleKey(field.getName()), field.getType(), bytefier);
+			properties[propsCnt++] = prop;
+			
+			Method method = getMehtod(clazz, field);
+			
+			Class<?> retType = method.getReturnType();
+			
+			String methName = method.getName();
+			
+			String cond = null;
+			
+			if(retType == int.class)
+				cond = "if(idx == " + i + ") ret = Integer.valueOf(pojo." + methName + "());";
+			else if(retType == boolean.class)
+				cond = "if(idx == " + i + ") ret = Boolean.valueOf(pojo." + methName + "());";					
+			else if(retType == float.class)
+				cond = "if(idx == " + i + ") ret = Float.valueOf(pojo." + methName + "());";				
+			else if(retType == double.class)
+				cond = "if(idx == " + i + ") ret = Double.valueOf(pojo." + methName + "());";
+			else if(retType == char.class)
+				cond = "if(idx == " + i + ") ret = Character.valueOf(pojo." + methName + "());";				
+			else if(retType == short.class)
+				cond = "if(idx == " + i + ") ret = Short.valueOf(pojo." + methName + "());";
+			else if(retType == long.class)
+				cond = "if(idx == " + i + ") ret = Long.valueOf(pojo." + methName + "());";
+			else if(retType == byte.class)
+				cond = "if(idx == " + i + ") ret = Byte.valueOf(pojo." + methName + "());";
+			else
+				cond = "if(idx == " + i + ") ret = pojo." + methName + "();";
+			
+			methBody.append(cond);
+			
+		}
+		
+		methBody.append("return ret;}");
+
 		try {
-
+		
 			ClassPool cp = ClassPool.getDefault();
 			CtClass objectReaderInterface = cp.get("io.speejson.io.ObjectReader");
 			CtClass readerClass = cp.makeClass("io.speejson.io.SpeedJson" + clazz.getSimpleName() + "Reader");
 			readerClass.addInterface(objectReaderInterface);
 			
-			StringBuilder methBody = new StringBuilder("public Object read(Object obj, int idx) {");
-			methBody.append(clazz.getCanonicalName() + " pojo = (" + clazz.getCanonicalName() + ") obj;");
-			methBody.append("Object ret = null;");
-			
-			
-			Field[] fields = clazz.getDeclaredFields();
-			
-			Property[] properties = new Property[fields.length];
-			int propsCnt = 0;
-			
-			for (int i = 0; i < fields.length; i++) {
-	
-				Field field = fields[i];
-				
-				if(field.getName().equals("serialVersionUID")) continue;
-				
-				Bytefier<?> bytefier = BytefiersHolder.get(field.getType());
-				Property prop = new Property(field.getName(), assembleKey(field.getName()), field.getType(), bytefier);
-				properties[propsCnt++] = prop;
-				
-				Method declaredMethod = null;
-				
-				String methName = null;
-				if(field.getType() == Boolean.class || field.getType() == boolean.class) {
-					methName = "is" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);			
-				
-					try {
-						declaredMethod = clazz.getDeclaredMethod(methName);
-					} catch(NoSuchMethodException | SecurityException e) {}
-					
-				}
-				
-				if(declaredMethod == null) {
-					methName = "get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);	
-				}
-				
-				declaredMethod = clazz.getDeclaredMethod(methName);
-				Class<?> retType = declaredMethod.getReturnType();
-				
-				String cond = null;
-				
-				if(retType == int.class)
-					cond = "if(idx == " + i + ") ret = Integer.valueOf(pojo." + methName + "());";
-				else if(retType == boolean.class)
-					cond = "if(idx == " + i + ") ret = Boolean.valueOf(pojo." + methName + "());";					
-				else if(retType == float.class)
-					cond = "if(idx == " + i + ") ret = Float.valueOf(pojo." + methName + "());";				
-				else if(retType == double.class)
-					cond = "if(idx == " + i + ") ret = Double.valueOf(pojo." + methName + "());";
-				else if(retType == char.class)
-					cond = "if(idx == " + i + ") ret = Character.valueOf(pojo." + methName + "());";				
-				else if(retType == short.class)
-					cond = "if(idx == " + i + ") ret = Short.valueOf(pojo." + methName + "());";
-				else if(retType == long.class)
-					cond = "if(idx == " + i + ") ret = Long.valueOf(pojo." + methName + "());";
-				else if(retType == byte.class)
-					cond = "if(idx == " + i + ") ret = Byte.valueOf(pojo." + methName + "());";
-				else
-					cond = "if(idx == " + i + ") ret = pojo." + methName + "();";
-				
-				methBody.append(cond);
-				
-			}
-			
-			methBody.append("return ret;}");
-
 			CtMethod readMethod = CtNewMethod.make(methBody.toString(), readerClass);
 			readerClass.addMethod(readMethod);
 			
@@ -112,24 +109,49 @@ public class ReaderBuilder {
 			readerClass.addMethod(setFieldsMethod);
 
 			reader = (ObjectReader) readerClass.toClass().getConstructor().newInstance();
-			
-			
-			
-			reader.setProperties(properties);
-			
-			readers.put(clazz, reader);
-			
-			return reader;
-			
-		} catch(Exception e) {
-			throw new RuntimeException(e);
+		
+		} catch(CannotCompileException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | NotFoundException e) {
+			throw new InternalToolingInitializationException(e);
 		}
 		
 		
+		reader.setProperties(properties);
+		
+		return reader;
 	}
 	
+	private Method getMehtod(Class<?> clazz, Field field) {
+		
+		String methNameIs = mountMethodName("is", field.getName());			
+		String methNameGet = mountMethodName("get", field.getName());			
 	
-	private static byte[] assembleKey(String fieldName) {
+		Method[] declaredMethods = clazz.getDeclaredMethods();
+		
+		List<Method> methodList = 
+				Stream.of(declaredMethods)
+						.filter(methodTest -> isGetter(methodTest, field, methNameIs, methNameGet))
+						.collect(Collectors.toList());
+		
+		if(methodList.size() != 1) {
+			throw new ReflectionException("Did not find getter for: " + field.getName());
+		}
+		
+		return methodList.get(0);
+	}
+	
+	private String mountMethodName(String prefix, String fieldName) {
+		return prefix + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+	}
+	
+	private boolean isGetter(Method methodTest, Field field, String methNameIs, String methNameGet) {
+		
+		return (methodTest.getName().equals(methNameIs) || methodTest.getName().equals(methNameGet))  
+				&& methodTest.getReturnType() == field.getType() 
+				&& methodTest.getParameters().length == 0;
+		
+	}
+	
+	private byte[] assembleKey(String fieldName) {
 		
 		byte[] name = fieldName.getBytes();
 		

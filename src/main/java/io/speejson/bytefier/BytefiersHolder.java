@@ -48,6 +48,8 @@ public class BytefiersHolder {
 		
 	}
 
-	
+    private BytefiersHolder() {
+		throw new IllegalStateException("Utility class");
+    }
 	
 }

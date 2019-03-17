@@ -1,23 +1,8 @@
 package io.speejson;
 
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.nio.ByteBuffer;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import io.speejson.bytefier.Bytefier;
-import io.speejson.bytefier.DateBytefier;
-import io.speejson.bytefier.DoubleManualConvertBytefier;
-import io.speejson.bytefier.IntegerBytefier;
-import net.bytebuddy.implementation.bind.annotation.BindingPriority;
+import io.speejson.bytefier.LongBytefier;
 
 //@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 
@@ -27,16 +12,17 @@ public class Main {
 
 		Double d = 1.15;
 
-		IntegerBytefier ib = new IntegerBytefier();
-		
-		StringBuffer target = new StringBuffer();
+		LongBytefier longBytefier = new LongBytefier();
 		
 		for (int f = 0; f < 30; f++) {
 			
 			long ini2 = System.nanoTime();
 			
-			byte[] bs = DoubleManualConvertBytefier.formatDoubleFast(d, 2, 2);
+			long longValue = Double.doubleToRawLongBits(d);
 			
+			
+		    byte[] bs = longBytefier.convert(longValue);
+		    
 			long end2 = System.nanoTime();
 			
 			System.out.println(new String(bs));
@@ -53,14 +39,7 @@ public class Main {
 			
 		
 		long ini = System.nanoTime();
-		
-		/*char[] chars = "password".toCharArray();
-		byte[] bytes = new byte[chars.length*2];
-		for(int i = 0; i < chars.length; i++) {
-		   bytes[i * 2] = (byte) (chars[i] >> 8);
-		   bytes[i * 2 + 1] = (byte) chars[i];
-		}*/
-		
+
 		byte[] bs = ("password"+f).getBytes();
 		
 		long end = System.nanoTime();

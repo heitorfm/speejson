@@ -1,10 +1,6 @@
 package io.speejson;
 
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -20,7 +16,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.speejson.io.ObjectReader;
 import io.speejson.io.ReaderBuilder;
@@ -49,15 +44,12 @@ public class SpeeJson {
 			int.class, long.class, float.class, double.class,
 	        Boolean.class, Character.class, Byte.class, Short.class,
 	        Integer.class, Long.class, Float.class, Double.class, Void.class);
-	        //String.class, Timestamp.class, BigInteger.class, BigDecimal.class, 
-	        //Date.class, LocalDate.class, LocalTime.class, LocalDateTime.class, Calendar.class, GregorianCalendar.class);
 	
 	
-
+	private ReaderBuilder readerBuilder = new ReaderBuilder();
 	
 	public SpeeJson() {
 		writer = new StringSpeeJsonWriter();
-		//writer.append("{");
 	}
 	
 	public SpeeJson(byte[] back) {
@@ -65,13 +57,11 @@ public class SpeeJson {
 	}
 
 	public SpeeJson(byte[] back, int offset) {
-		writer = new ByteArraySpeeJsonWriter(back, 0);
-		//writer.append("{");
+		writer = new ByteArraySpeeJsonWriter(back, offset);
 	}
 	
 	public SpeeJson(ByteBuffer buf) {
 		writer = new ByteBufferSpeeJsonWriter(buf);
-		//writer.append("{");
 	}
 
 	public SpeeJson(OutputStream os) {
@@ -117,11 +107,6 @@ public class SpeeJson {
 		
 		writer.append(JsonSyntax.CLOSE_CLAVE);
 
-		/*if(curState == OPENED) {
-			writer.append(JsonSyntax.CLOSE_CLAVE);
-			curState = CLOSED;
-		}*/
-		
 	}
 	
 	private void processKeyValue(Property property, Object value) {
@@ -149,7 +134,7 @@ public class SpeeJson {
 			writer.append(JsonSyntax.NULL);
 		else {
 			
-			ObjectReader reader = ReaderBuilder.build(value.getClass());
+			ObjectReader reader = readerBuilder.getReader(value.getClass());
 			
 			Property[] props = reader.getProperties();
 			
@@ -170,12 +155,9 @@ public class SpeeJson {
 				
 				porpCount++;
 				
-				
 			}
 			
-			
 		}
-			
 		
 	}
 		
@@ -278,26 +260,17 @@ public class SpeeJson {
 		else {
 			writer.append(JsonSyntax.OPEN_CLAVE);
 	
-			//long ini = System.nanoTime();
-
-			ObjectReader reader = ReaderBuilder.build(value.getClass());
-		
-			//long end = System.nanoTime();
-			//System.out.println("read[build] => " + (end - ini) + " nanos  |  " +  TimeUnit.NANOSECONDS.toMicros(end - ini) + " micros  |  " + TimeUnit.NANOSECONDS.toMillis(end - ini) + " millis");
-			
+			ObjectReader reader = readerBuilder.getReader(value.getClass());
+				
 			Property[] fields = reader.getProperties();
 			
 			for (int i = 0; i < fields.length; i++) {
-
-				
+			
 				Object res = reader.read(value, i);
 
 				if(i > 0) writer.append(JsonSyntax.COMMA);
-				
 
 				processKeyValue(fields[i], res);
-	
-				
 				
 			}
 			
@@ -308,11 +281,7 @@ public class SpeeJson {
 	}
 
 	
-
-	
 	public String toString() {
-
-		
 		return writer.toString();
 	}
 

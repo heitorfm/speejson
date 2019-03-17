@@ -141,10 +141,9 @@ public class DoubleManualConvertBytefier implements Bytefier<Double> {
     }
     
 	private void getDecimal(double value) {
-		
-		double d = 1.15;
+	
         short[] digits = new short[10];
-        double tmp = d - ((int) d) + 0.5 * 1e-10;
+        double tmp = value - ((int) value) + 0.5 * 1e-10;
         for (int i = 0; i < digits.length && tmp != 0; i++) {
             tmp *= 10;
             digits[i] = (short) tmp;
