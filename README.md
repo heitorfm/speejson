@@ -1,6 +1,18 @@
 # speejson
 
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=heitorfm_speejson)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=bugs)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=ncloc)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+
+
 
 Around **100%** faster than Jackson. From Java object -> json
 
