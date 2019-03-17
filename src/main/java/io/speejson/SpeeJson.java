@@ -111,13 +111,16 @@ public class SpeeJson {
 	
 	public void put(Object obj) {
 		
-		extractValue(obj);
+		writer.append(JsonSyntax.OPEN_CLAVE);
 		
+		extractValue2(obj);
+		
+		writer.append(JsonSyntax.CLOSE_CLAVE);
 
-		if(curState == OPENED) {
+		/*if(curState == OPENED) {
 			writer.append(JsonSyntax.CLOSE_CLAVE);
 			curState = CLOSED;
-		}
+		}*/
 		
 	}
 	
@@ -139,10 +142,48 @@ public class SpeeJson {
 		porpCount++;
 	}
 	
+	@SuppressWarnings("unchecked")
+	private void extractValue2(Object value) {
+
+		if(value == null)
+			writer.append(JsonSyntax.NULL);
+		else {
+			
+			ObjectReader reader = ReaderBuilder.build(value.getClass());
+			
+			Property[] props = reader.getProperties();
+			
+			for (int i = 0; i < props.length; i++) {
+
+				
+				Object content = reader.read(value, i);
+
+				if(i > 0) writer.append(JsonSyntax.COMMA);
+				
+				
+				writer.append(props[i].getKey());
+				
+				if(content == null) writer.append(JsonSyntax.NULL);
+				else {
+					writer.append(props[i].getBytefier().convert(content));
+				}
+				
+				porpCount++;
+				
+				
+			}
+			
+			
+		}
+			
+		
+	}
+		
 	private void extractValue(Object value) {
 		
 		if(value == null)
 			writer.append(JsonSyntax.NULL);
+		
 		
 		else if(NATIVE_TYPES.contains(value.getClass())) 
 			writer.append(value.toString());

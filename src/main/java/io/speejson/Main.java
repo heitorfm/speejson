@@ -11,7 +11,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
+import io.speejson.bytefier.Bytefier;
+import io.speejson.bytefier.DateBytefier;
+import io.speejson.bytefier.DoubleManualConvertBytefier;
+import io.speejson.bytefier.IntegerBytefier;
 import net.bytebuddy.implementation.bind.annotation.BindingPriority;
 
 //@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -20,8 +25,54 @@ public class Main {
 
 	public static void main(String[] argss) {
 
+		Double d = 1.15;
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		IntegerBytefier ib = new IntegerBytefier();
+		
+		StringBuffer target = new StringBuffer();
+		
+		for (int f = 0; f < 30; f++) {
+			
+			long ini2 = System.nanoTime();
+			
+			byte[] bs = DoubleManualConvertBytefier.formatDoubleFast(d, 2, 2);
+			
+			long end2 = System.nanoTime();
+			
+			System.out.println(new String(bs));
+			
+			System.out.println("SPEEJSON => " + (end2 - ini2) + " nanos  |  " +  TimeUnit.NANOSECONDS.toMicros(end2 - ini2) + " micros  |  " + TimeUnit.NANOSECONDS.toMillis(end2 - ini2) + " millis");
+		}
+		//System.out.println(Arrays.toString(digits));
+		
+		
+		
+		System.exit(1);
+		
+		for (int f = 0; f < 10; f++) {
+			
+		
+		long ini = System.nanoTime();
+		
+		/*char[] chars = "password".toCharArray();
+		byte[] bytes = new byte[chars.length*2];
+		for(int i = 0; i < chars.length; i++) {
+		   bytes[i * 2] = (byte) (chars[i] >> 8);
+		   bytes[i * 2 + 1] = (byte) chars[i];
+		}*/
+		
+		byte[] bs = ("password"+f).getBytes();
+		
+		long end = System.nanoTime();
+		
+		System.out.println("SPEEJSON => " + (end - ini) + " nanos  |  " +  TimeUnit.NANOSECONDS.toMicros(end - ini) + " micros  |  " + TimeUnit.NANOSECONDS.toMillis(end - ini) + " millis");
+
+		}
+	
+		System.exit(1);
+		
+
+		/*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		DecimalFormat decForm = (DecimalFormat) DecimalFormat.getInstance(new Locale("pt", "BR"));
 		MathContext mc = new MathContext(2, RoundingMode.CEILING);
 		
@@ -40,7 +91,7 @@ public class Main {
 		
 		byte[] arr = new byte[1000];
 		
-		ByteBuffer buf = ByteBuffer.allocate(1000);
+		ByteBuffer buf = ByteBuffer.allocate(1000);*/
 		
 
 		

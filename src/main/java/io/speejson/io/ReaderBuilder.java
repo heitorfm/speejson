@@ -7,6 +7,8 @@ import java.util.Map;
 
 import io.speejson.JsonSyntax;
 import io.speejson.Property;
+import io.speejson.bytefier.Bytefier;
+import io.speejson.bytefier.BytefiersHolder;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtField;
@@ -48,7 +50,8 @@ public class ReaderBuilder {
 				
 				if(field.getName().equals("serialVersionUID")) continue;
 				
-				Property prop = new Property(field.getName(), assembleKey(field.getName()), field.getType());
+				Bytefier<?> bytefier = BytefiersHolder.get(field.getType());
+				Property prop = new Property(field.getName(), assembleKey(field.getName()), field.getType(), bytefier);
 				properties[propsCnt++] = prop;
 				
 				Method declaredMethod = null;
@@ -68,7 +71,7 @@ public class ReaderBuilder {
 				}
 				
 				declaredMethod = clazz.getDeclaredMethod(methName);
-				Class retType = declaredMethod.getReturnType();
+				Class<?> retType = declaredMethod.getReturnType();
 				
 				String cond = null;
 				
@@ -95,7 +98,7 @@ public class ReaderBuilder {
 				
 			}
 			
-			methBody.append(" return ret;}");
+			methBody.append("return ret;}");
 
 			CtMethod readMethod = CtNewMethod.make(methBody.toString(), readerClass);
 			readerClass.addMethod(readMethod);
