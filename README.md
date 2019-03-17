@@ -1,5 +1,7 @@
 # speejson
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=heitorfm_speejson)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)
+
 Around **100%** faster than Jackson. From Java object -> json
 
     {  
