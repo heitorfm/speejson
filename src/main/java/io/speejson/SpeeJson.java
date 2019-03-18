@@ -87,11 +87,11 @@ public class SpeeJson {
 	public SpeeJson put(String key, Object value) {
 		
 		if(curState == READY) {
-			writer.append(JsonSyntax.OPEN_CLAVE);
+			writer.append(JsonSyntax.getCloseClave());
 			curState = OPENED;
 		}
 		
-		if(porpCount > 0) writer.append(JsonSyntax.COMMA);
+		if(porpCount > 0) writer.append(JsonSyntax.getComma());
 		
 		processKeyValue(key, value);
 		
@@ -101,11 +101,11 @@ public class SpeeJson {
 	
 	public void put(Object obj) {
 		
-		writer.append(JsonSyntax.OPEN_CLAVE);
+		writer.append(JsonSyntax.getCloseClave());
 		
 		extractValue2(obj);
 		
-		writer.append(JsonSyntax.CLOSE_CLAVE);
+		writer.append(JsonSyntax.getCloseClave() );
 
 	}
 	
@@ -120,7 +120,7 @@ public class SpeeJson {
 	
 	private void processKeyValue(String key, Object value) {
 
-		writer.append(JsonSyntax.QUOTE).append(key).append(JsonSyntax.QUOTE).append(JsonSyntax.COLON);
+		writer.append(JsonSyntax.getQuote()).append(key).append(JsonSyntax.getQuote()).append(JsonSyntax.getColon());
 		
 		extractValue(value);
 		
@@ -131,7 +131,7 @@ public class SpeeJson {
 	private void extractValue2(Object value) {
 
 		if(value == null)
-			writer.append(JsonSyntax.NULL);
+			writer.append(JsonSyntax.getNull());
 		else {
 			
 			ObjectReader reader = readerBuilder.getReader(value.getClass());
@@ -143,12 +143,12 @@ public class SpeeJson {
 				
 				Object content = reader.read(value, i);
 
-				if(i > 0) writer.append(JsonSyntax.COMMA);
+				if(i > 0) writer.append(JsonSyntax.getComma());
 				
 				
 				writer.append(props[i].getKey());
 				
-				if(content == null) writer.append(JsonSyntax.NULL);
+				if(content == null) writer.append(JsonSyntax.getNull());
 				else {
 					writer.append(props[i].getBytefier().convert(content));
 				}
@@ -164,41 +164,41 @@ public class SpeeJson {
 	private void extractValue(Object value) {
 		
 		if(value == null)
-			writer.append(JsonSyntax.NULL);
+			writer.append(JsonSyntax.getNull());
 		
 		
 		else if(NATIVE_TYPES.contains(value.getClass())) 
 			writer.append(value.toString());
 		
 		else if(value.getClass() == String.class)
-			writer.append(JsonSyntax.QUOTE).append(value.toString()).append(JsonSyntax.QUOTE);
+			writer.append(JsonSyntax.getQuote()).append(value.toString()).append(JsonSyntax.getQuote());
 		
 		else if(value.getClass() == Date.class) {
-			if(dateFormat != null) writer.append(JsonSyntax.QUOTE).append(dateFormat.format(value)).append(JsonSyntax.QUOTE);
+			if(dateFormat != null) writer.append(JsonSyntax.getQuote()).append(dateFormat.format(value)).append(JsonSyntax.getQuote());
 			else writer.append(Long.toString(((Date)value).getTime()));
 		}
 		else if(value.getClass() == Calendar.class) {
-			if(dateFormat != null) writer.append(JsonSyntax.QUOTE).append(dateFormat.format(((Calendar)value).getTime())).append(JsonSyntax.QUOTE);
+			if(dateFormat != null) writer.append(JsonSyntax.getQuote()).append(dateFormat.format(((Calendar)value).getTime())).append(JsonSyntax.getQuote());
 			else writer.append(Long.toString(((Calendar)value).getTime().getTime()));
 		}
 		else if(value.getClass() == LocalDateTime.class || value.getClass() == LocalDate.class || value.getClass() == LocalTime.class) {
-			if(dateTimeFormatter != null) writer.append(JsonSyntax.QUOTE).append(dateTimeFormatter.format((TemporalAccessor)value)).append(JsonSyntax.QUOTE);
-			else writer.append(JsonSyntax.QUOTE).append(value.toString()).append(JsonSyntax.QUOTE);			
+			if(dateTimeFormatter != null) writer.append(JsonSyntax.getQuote()).append(dateTimeFormatter.format((TemporalAccessor)value)).append(JsonSyntax.getQuote());
+			else writer.append(JsonSyntax.getQuote()).append(value.toString()).append(JsonSyntax.getQuote());			
 		}
 		
 		else if(value.getClass() == BigDecimal.class) {
 			if(mc != null) value = ((BigDecimal)value).setScale(mc.getPrecision(), mc.getRoundingMode());
-			if(decFormat != null) writer.append(JsonSyntax.QUOTE).append(decFormat.format(value)).append(JsonSyntax.QUOTE);
+			if(decFormat != null) writer.append(JsonSyntax.getQuote()).append(decFormat.format(value)).append(JsonSyntax.getQuote());
 			else writer.append(value.toString());
 		}
 		
 		else if(value instanceof List) {
-			writer.append(JsonSyntax.OPEN_BRACKET);
+			writer.append(JsonSyntax.getOpenBracket());
 			for(int i = 0; i < ((List)value).size(); i++) {
-				if(i > 0) writer.append(JsonSyntax.COMMA);
+				if(i > 0) writer.append(JsonSyntax.getComma());
 				extractValue(((List)value).get(i));
 			}
-			writer.append(JsonSyntax.CLOSE_BRACKET);
+			writer.append(JsonSyntax.getCloseBracket());
 		}
 		
 		else if(value instanceof Integer[])
@@ -231,34 +231,34 @@ public class SpeeJson {
 			writer.append(Arrays.toString((boolean[]) value));
 		
 		else if(value instanceof Date[]) {
-			writer.append(JsonSyntax.OPEN_BRACKET);
+			writer.append(JsonSyntax.getOpenBracket());
 			for(int i = 0; i < ((Date[])value).length; i++) {
-				if(i > 0) writer.append(JsonSyntax.COMMA);
+				if(i > 0) writer.append(JsonSyntax.getComma());
 				extractValue(((Date[])value)[i]);
 			}
-			writer.append(JsonSyntax.CLOSE_BRACKET);
+			writer.append(JsonSyntax.getCloseBracket());
 		}
 
 		else if(value instanceof BigDecimal[]) {
-			writer.append(JsonSyntax.OPEN_BRACKET);
+			writer.append(JsonSyntax.getOpenBracket() );
 			for(int i = 0; i < ((BigDecimal[])value).length; i++) {
-				if(i > 0) writer.append(JsonSyntax.COMMA);
+				if(i > 0) writer.append(JsonSyntax.getComma());
 				extractValue(((BigDecimal[])value)[i]);
 			}
-			writer.append(JsonSyntax.CLOSE_BRACKET);
+			writer.append(JsonSyntax.getCloseBracket());
 		}
 		
 		else if(value instanceof BigInteger[]) {
-			writer.append(JsonSyntax.OPEN_BRACKET);
+			writer.append(JsonSyntax.getOpenBracket() );
 			for(int i = 0; i < ((BigInteger[])value).length; i++) {
-				if(i > 0) writer.append(JsonSyntax.COMMA);
+				if(i > 0) writer.append(JsonSyntax.getComma());
 				extractValue(((BigInteger[])value)[i]);
 			}
-			writer.append(JsonSyntax.CLOSE_BRACKET);
+			writer.append(JsonSyntax.getCloseBracket());
 		}
 		
 		else {
-			writer.append(JsonSyntax.OPEN_CLAVE);
+			writer.append(JsonSyntax.getOpenClave());
 	
 			ObjectReader reader = readerBuilder.getReader(value.getClass());
 				
@@ -268,13 +268,13 @@ public class SpeeJson {
 			
 				Object res = reader.read(value, i);
 
-				if(i > 0) writer.append(JsonSyntax.COMMA);
+				if(i > 0) writer.append(JsonSyntax.getComma());
 
 				processKeyValue(fields[i], res);
 				
 			}
 			
-			writer.append(JsonSyntax.CLOSE_CLAVE);
+			writer.append(JsonSyntax.getCloseClave());
 		
 		}
 		

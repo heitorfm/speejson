@@ -1,10 +1,12 @@
 /**
+ *   ========================================================================
  *   SpeeJson - high throughput json processing
  *   Copyright (C) 2019  Heitor Machado
+ *   ------------------------------------------------------------------------
  *
  *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
+ *   it under the terms of the GNU Lesser General Public License as published
+ *    by the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
  *
  *   This program is distributed in the hope that it will be useful,
@@ -176,19 +178,19 @@ public class ReaderBuilder {
 		
 		byte[] name = fieldName.getBytes();
 		
-		byte[] ret = new byte[name.length + (JsonSyntax.QUOTE.length * 2) + JsonSyntax.COLON.length];
+		byte[] ret = new byte[name.length + (JsonSyntax.getQuote().length * 2) + JsonSyntax.getQuote().length];
 		
 		int retOffset = 0;
-		System.arraycopy(JsonSyntax.QUOTE, 0, ret, retOffset, JsonSyntax.QUOTE.length);
-		retOffset += JsonSyntax.QUOTE.length;
+		System.arraycopy(JsonSyntax.getQuote(), 0, ret, retOffset, JsonSyntax.getQuote().length);
+		retOffset += JsonSyntax.getQuote().length;
 
 		System.arraycopy(name, 0, ret, retOffset, name.length);
 		retOffset += name.length;
 		
-		System.arraycopy(JsonSyntax.QUOTE, 0, ret, retOffset, JsonSyntax.QUOTE.length);
-		retOffset += JsonSyntax.QUOTE.length;
+		System.arraycopy(JsonSyntax.getQuote(), 0, ret, retOffset, JsonSyntax.getQuote().length);
+		retOffset += JsonSyntax.getQuote().length;
 		
-		System.arraycopy(JsonSyntax.COLON, 0, ret, retOffset, JsonSyntax.COLON.length);
+		System.arraycopy(JsonSyntax.getColon(), 0, ret, retOffset, JsonSyntax.getColon().length);
 
 		return ret;
 	}

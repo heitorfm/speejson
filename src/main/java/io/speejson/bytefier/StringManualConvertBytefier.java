@@ -8,7 +8,7 @@ public class StringManualConvertBytefier implements Bytefier<String> {
 	public byte[] convert(String value) {
 		
 		char[] chars = value.toCharArray();
-		byte[] bytes = new byte[chars.length * 2 + (JsonSyntax.QUOTE.length * 2)];
+		byte[] bytes = new byte[chars.length * 2 + (JsonSyntax.getQuote().length * 2)];
 		for(int i = 0; i < chars.length; i++) {
 		   bytes[i * 2] = (byte) (chars[i] >> 8);
 		   bytes[i * 2 + 1] = (byte) chars[i];
