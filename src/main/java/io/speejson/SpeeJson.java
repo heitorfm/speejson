@@ -36,7 +36,7 @@ public class SpeeJson {
 	
 	private static final byte READY  = 0;
 	private static final byte OPENED = 1;
-	private static final byte CLOSED = 1;
+
 	private byte curState = READY;
 	
 	private static final List<Class<?>> NATIVE_TYPES = Arrays.asList(
