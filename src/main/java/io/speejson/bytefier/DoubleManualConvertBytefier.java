@@ -110,14 +110,9 @@ public class DoubleManualConvertBytefier implements Bytefier<Double> {
     
     private static int add(byte[] base, byte[] newContent, int offset) {
     	
-    	//System.arraycopy(newContent, 0, base, offset, newContent.length);
-    	
-    	for(int i = 0; i < newContent.length; i++) {
-    		base[offset + i] = newContent[i];
-    	}
+    	System.arraycopy(newContent, 0, base, offset, newContent.length);
     	
     	return offset + newContent.length;
-    	
     }
 
     private static byte[] trim(byte[] ba, int offset) {
