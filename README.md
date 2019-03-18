@@ -5,6 +5,7 @@
 
 #### **SpeeJson is a extreme high throughput java library for Json serialization and deserialization**
 
+<br /><br />
 
 ## Easy to use <img src="https://heitorfm.github.io/speejson/img/coder.png" align="right" style="height: 128px"/>
 
