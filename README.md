@@ -1,3 +1,4 @@
+<img src="https://heitorfm.github.io/speejson/img/clock.png" align="right" style="height: 128px"/>
 # SpeeJson
 
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=bugs)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=ncloc)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) 
@@ -8,6 +9,10 @@
 
 ```java
 ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+Person person = new Person();
+// fullfill properties
+
 SpeeJson speedjson = new SpeeJson();
 speedjson.put(os, person);
 ```
