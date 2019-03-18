@@ -1,14 +1,9 @@
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=bugs)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=ncloc)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) 
-
-<<<<<<< HEAD
-# SpeeJson <img src="https://heitorfm.github.io/speejson/img/clock.png" align="right" style="height:128px"/>
-=======
->>>>>>> 7ebfd01f7ea0513877145f241c62ec7c4a35bde9
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=heitorfm_speejson)  [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=bugs)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=heitorfm_speejson&metric=ncloc)](https://sonarcloud.io/dashboard?id=heitorfm_speejson) 
 
 
 # SpeeJson <img src="https://heitorfm.github.io/speejson/img/clock.png" align="right" style="height: 64px"/>
 
-### **SpeeJson is a extreme high throughput java library for Json serialization and deserialization**
+#### **SpeeJson is a extreme high throughput java library for Json serialization and deserialization**
 
 
 ## Easy to use <img src="https://heitorfm.github.io/speejson/img/coder.png" align="right" style="height: 128px"/>
