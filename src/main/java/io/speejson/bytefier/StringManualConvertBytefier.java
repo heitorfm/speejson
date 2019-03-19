@@ -15,18 +15,17 @@ public class StringManualConvertBytefier implements Bytefier<String> {
 		}
 		
 		return bytes;
-
-	
-	
 	}
 
-	/*
+
+	public String byteArrayToString(byte[] bytes) {
 	 
-	char[] chars2 = new char[bytes.length/2];
-	for(int i=0;i<chars2.length;i++) 
-	   chars2[i] = (char) ((bytes[i*2] << 8) + (bytes[i*2+1] & 0xFF));
-		String password = new String(chars2);
-	  
-	 */
+		char[] chars2 = new char[bytes.length / 2];
+		for(int i = 0; i < chars2.length; i++) { 
+		   chars2[i] = (char) ((bytes[i * 2] << 8) + (bytes[i * 2 + 1] & 0xFF));
+		}
+		
+		return new String(chars2);
+	}
 	
 }
