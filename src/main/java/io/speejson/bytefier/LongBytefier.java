@@ -75,7 +75,7 @@ public class LongBytefier implements Bytefier<Long> {
         return charPos;
     }
 	
-	private byte[] nativeLongToByteArray(Long value) {
+	public byte[] nativeLongToByteArray(Long value) {
 		
 	    return new byte[] {
 		        (byte) ((value >> 56) & 0xff),

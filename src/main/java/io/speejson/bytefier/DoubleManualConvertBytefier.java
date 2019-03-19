@@ -135,7 +135,7 @@ public class DoubleManualConvertBytefier implements Bytefier<Double> {
     	return n < POWERS_OF_TEN_DOUBLE.length ? POWERS_OF_TEN_DOUBLE[n] : Math.pow(10, n);
     }
     
-	private void getDecimal(double value) {
+    public void getDecimal(double value) {
 	
         short[] digits = new short[10];
         double tmp = value - ((int) value) + 0.5 * 1e-10;
@@ -147,7 +147,7 @@ public class DoubleManualConvertBytefier implements Bytefier<Double> {
 		
 	}
 	
-	private byte[] nativeDoubleToByteArray(Double value) {
+    public byte[] nativeDoubleToByteArray(Double value) {
 		
 	    long longValue = Double.doubleToRawLongBits(value);
 		

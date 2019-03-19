@@ -93,7 +93,7 @@ public class IntegerBytefier implements Bytefier<Integer> {
     }
 	
 	
-	private byte[] nativeIntegerToByteArray(Integer value) {
+	public byte[] nativeIntegerToByteArray(Integer value) {
 		
 		
 	    return new byte[] {
