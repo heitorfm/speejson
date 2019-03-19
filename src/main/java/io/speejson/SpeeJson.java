@@ -46,27 +46,13 @@ public class SpeeJson {
 	        Integer.class, Long.class, Float.class, Double.class, Void.class);
 	
 	
-	private ReaderBuilder readerBuilder = new ReaderBuilder();
+	private static ReaderBuilder readerBuilder = new ReaderBuilder();
 	
 	public SpeeJson() {
-		writer = new StringSpeeJsonWriter();
+	
 	}
 	
-	public SpeeJson(byte[] back) {
-		this(back, 0);
-	}
 
-	public SpeeJson(byte[] back, int offset) {
-		writer = new ByteArraySpeeJsonWriter(back, offset);
-	}
-	
-	public SpeeJson(ByteBuffer buf) {
-		writer = new ByteBufferSpeeJsonWriter(buf);
-	}
-
-	public SpeeJson(OutputStream os) {
-		writer = new OutputStreamSpeeJsonWriter(os);
-	}
 
 	public void setDateFormatter(DateFormat dateFormat) {
 		this.dateFormat = dateFormat;
@@ -83,6 +69,10 @@ public class SpeeJson {
 	public void setDateTimeFormatter(DateTimeFormatter dateTimeFormatter) {
 		this.dateTimeFormatter = dateTimeFormatter;
 	}
+	
+	/*************************************************************************************/
+	/*******************                      PUT                         ****************/
+	/*************************************************************************************/
 	
 	public SpeeJson put(String key, Object value) {
 		
@@ -101,12 +91,48 @@ public class SpeeJson {
 	
 	public void put(Object obj) {
 		
+		writer = new StringSpeeJsonWriter();
+		
+		internalPut(obj);
+
+	}
+	
+	public void put(Object obj, byte[] back) {
+		put(obj, back, 0);
+	}
+
+	public void put(Object obj, byte[] back, int offset) {
+		
+		writer = new ByteArraySpeeJsonWriter(back, offset);
+		
+		internalPut(obj);
+		
+	}
+	
+	public void put(Object obj, ByteBuffer buf) {
+		
+		writer = new ByteBufferSpeeJsonWriter(buf);
+		
+		internalPut(obj);
+		
+	}
+
+	public void put(Object obj, OutputStream os) {
+		
+		writer = new OutputStreamSpeeJsonWriter(os);
+		
+		internalPut(obj);
+		
+	}
+	
+	private void internalPut(Object obj) {
+		
 		writer.append(JsonSyntax.getCloseClave());
 		
 		extractValue2(obj);
 		
-		writer.append(JsonSyntax.getCloseClave() );
-
+		writer.append(JsonSyntax.getCloseClave());
+		
 	}
 	
 	private void processKeyValue(Property property, Object value) {
