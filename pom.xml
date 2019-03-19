@@ -15,18 +15,19 @@
 	
 	<dependencies>
 
-
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.24.1-GA</version>
 		</dependency>
 
-
-
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.9</version>
+		</dependency>
 
 
 	</dependencies>
-
 
 </project>

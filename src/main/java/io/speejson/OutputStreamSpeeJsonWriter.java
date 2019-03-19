@@ -3,9 +3,14 @@ package io.speejson;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 
 	private OutputStream os;
+	
+	private static final Logger log = LoggerFactory.getLogger(OutputStreamSpeeJsonWriter.class);
 	
 	public OutputStreamSpeeJsonWriter(OutputStream os) {
 		this.os = os;
@@ -19,7 +24,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.write(bs);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		
 		return this;
@@ -33,7 +38,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.write(bs);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		
 		return this;
@@ -46,7 +51,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		
 	}
@@ -64,7 +69,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.write(ba);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		
 		return this;
