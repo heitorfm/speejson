@@ -36,6 +36,7 @@ public class SpeeJson {
 	
 	private static final byte READY  = 0;
 	private static final byte OPENED = 1;
+	private static final byte CLOSED = 2;
 
 	private byte curState = READY;
 	
@@ -74,7 +75,9 @@ public class SpeeJson {
 	/*******************                      PUT                         ****************/
 	/*************************************************************************************/
 	
-	public SpeeJson put(String key, Object value) {
+	public SpeeJson add(String key, Object value) {
+		
+		if(writer == null) writer = new StringSpeeJsonWriter();
 		
 		if(curState == READY) {
 			writer.append(JsonSyntax.getOpenClave());
@@ -132,6 +135,7 @@ public class SpeeJson {
 		extractValue2(obj);
 		
 		writer.append(JsonSyntax.getCloseClave());
+		curState = CLOSED;
 		
 	}
 	
@@ -308,11 +312,16 @@ public class SpeeJson {
 
 	
 	public String toString() {
+		
+		if(curState == OPENED) writer.append(JsonSyntax.getCloseClave());
+		
 		return writer.toString();
 	}
 
 	public void clear() {
 		writer.clear();
+		porpCount = 0;
+		curState = READY;
 	}
 	
 }

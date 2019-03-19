@@ -10,7 +10,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 
 	private OutputStream os;
 	
-	private static final Logger log = LoggerFactory.getLogger(OutputStreamSpeeJsonWriter.class);
+	//private static final Logger log = LoggerFactory.getLogger(OutputStreamSpeeJsonWriter.class);
 	
 	public OutputStreamSpeeJsonWriter(OutputStream os) {
 		this.os = os;
@@ -24,7 +24,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.write(bs);
 		} catch (IOException e) {
-			log.error(e.getMessage(), e);
+		//	log.error(e.getMessage(), e);
 		}
 		
 		return this;
@@ -38,7 +38,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.write(bs);
 		} catch (IOException e) {
-			log.error(e.getMessage(), e);
+		//	log.error(e.getMessage(), e);
 		}
 		
 		return this;
@@ -51,7 +51,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.flush();
 		} catch (IOException e) {
-			log.error(e.getMessage(), e);
+		//	log.error(e.getMessage(), e);
 		}
 		
 	}
@@ -69,7 +69,7 @@ public class OutputStreamSpeeJsonWriter implements SpeeJsonWriter {
 		try {
 			os.write(ba);
 		} catch (IOException e) {
-			log.error(e.getMessage(), e);
+		//	log.error(e.getMessage(), e);
 		}
 		
 		return this;
