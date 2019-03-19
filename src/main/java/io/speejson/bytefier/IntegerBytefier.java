@@ -59,7 +59,8 @@ public class IntegerBytefier implements Bytefier<Integer> {
     }
 
 	private int getChars(int i, int index, byte[] buf) {
-        int q, r;
+        int q;
+        int r;
         int charPos = index;
 
         boolean negative = i < 0;

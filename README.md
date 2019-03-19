@@ -18,7 +18,7 @@ Person person = new Person();
 // fullfill properties
 
 SpeeJson speedjson = new SpeeJson();
-speedjson.put(os, person);
+speedjson.put(person, os);
 ```
 
 
