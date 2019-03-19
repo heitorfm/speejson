@@ -127,7 +127,7 @@ public class SpeeJson {
 	
 	private void internalPut(Object obj) {
 		
-		writer.append(JsonSyntax.getCloseClave());
+		writer.append(JsonSyntax.getOpenClave());
 		
 		extractValue2(obj);
 		
