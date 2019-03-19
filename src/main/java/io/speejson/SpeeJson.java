@@ -77,7 +77,7 @@ public class SpeeJson {
 	public SpeeJson put(String key, Object value) {
 		
 		if(curState == READY) {
-			writer.append(JsonSyntax.getCloseClave());
+			writer.append(JsonSyntax.getOpenClave());
 			curState = OPENED;
 		}
 		
