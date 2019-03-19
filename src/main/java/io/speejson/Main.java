@@ -10,6 +10,7 @@ public class Main {
 
 	public static void main(String[] argss) {
 
+		
 		Double d = 1.15;
 
 		LongBytefier longBytefier = new LongBytefier();

@@ -2,12 +2,12 @@ package io.speejson.bytefier;
 
 public class BooleanBytefier implements Bytefier<Boolean> {
 
-	@SuppressWarnings("unchecked")
+	private static final byte[] TRUE  = "true".getBytes();
+	private static final byte[] FALSE = "false".getBytes();
+	
 	public byte[] convert(Boolean value) {
-		
-		Bytefier<String> bytefier = (Bytefier<String>) BytefiersHolder.get(String.class);
-		
-		return bytefier.convert(value.toString());
+
+		return (value == null || value == false)? FALSE : TRUE;
 		
 	}
 

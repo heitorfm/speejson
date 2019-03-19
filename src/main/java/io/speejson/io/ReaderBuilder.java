@@ -52,8 +52,14 @@ public class ReaderBuilder {
     
     public ObjectReader getReader(Class<?> clazz) {
     	
-    	return readers.computeIfAbsent(clazz, key -> build(clazz));
+    	ObjectReader reader = readers.get(clazz);
     	
+    	if(reader == null) {
+    		reader = build(clazz);
+    		readers.put(clazz, reader);
+    	}
+    	
+    	return reader;
     }
 	
 	public ObjectReader build(Class<?> clazz) {
