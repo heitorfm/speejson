@@ -291,7 +291,7 @@ public class SpeeJson {
 			writer.append(JsonSyntax.getOpenClave());
 	
 			ObjectReader reader = readerBuilder.getReader(value.getClass());
-				
+
 			Property[] fields = reader.getProperties();
 			
 			for (int i = 0; i < fields.length; i++) {

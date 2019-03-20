@@ -11,6 +11,8 @@ public class UnsafeHandler {
 	public static final Unsafe UNSAFE = init();
 
 	public static final long VALUE_OFFSET = getFieldOffset("value");
+	
+	private static final long ARRAY_BASE_OFFSET = (long) UNSAFE.arrayBaseOffset(byte[].class);
 
 	private static Unsafe init() {
 
@@ -44,6 +46,23 @@ public class UnsafeHandler {
 	
     private UnsafeHandler() {
 		throw new IllegalStateException("Utility class");
+    }
+    
+    public static void copy(byte[] src, byte[] dest) {
+    	
+    	
+    	long srcOffset = ARRAY_BASE_OFFSET + ((long) 0 << 0);
+    	
+    	long dstOffset = ARRAY_BASE_OFFSET + ((long) 0 << 0);
+    	
+    	
+    	UNSAFE.copyMemory(src,
+    			srcOffset,
+    			dest,
+                dstOffset,
+                (long)src.length << 0);
+    	
+    	
     }
     
     

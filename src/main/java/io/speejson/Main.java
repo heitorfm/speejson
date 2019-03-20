@@ -1,5 +1,6 @@
 package io.speejson;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import io.speejson.bytefier.LongBytefier;
@@ -9,7 +10,6 @@ import io.speejson.bytefier.LongBytefier;
 public class Main {
 
 	public static void main(String[] argss) {
-
 		
 		Double d = 1.15;
 
