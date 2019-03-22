@@ -11,4 +11,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: /img/clock.png
+      image: /img/banner.png
