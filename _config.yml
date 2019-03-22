@@ -5,4 +5,4 @@ plugins:
 
 title: Fast Json processing
 description: SpeeJson is a extreme high throughput java library for Json serialization and deserialization
-image: https://heitorfm.github.io/speejson/img/clock.png
+image: /img/clock.png
