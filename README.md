@@ -4,7 +4,6 @@
 <meta property="og:image" content="https://heitorfm.github.io/speejson/img/clock.png"/>
 <meta property="og:description" content="SpeeJson is a extreme high throughput java library for Json serialization and deserialization"/>
 
-
 # SpeeJson <img src="https://heitorfm.github.io/speejson/img/clock.png" align="right" style="height: 128px"/>
 
 #### **SpeeJson is a extreme high throughput java library for Json serialization and deserialization**
