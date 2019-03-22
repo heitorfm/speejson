@@ -92,6 +92,7 @@ public class ReaderBuilder {
 			String methName = method.getName();
 			
 			String cond = null;
+			//			cond.append("if(idx == ").append(i).append(") ret = Integer.valueOf(pojo.").append(methName).append("());");
 			
 			if(retType == int.class)
 				cond = "if(idx == " + i + ") ret = Integer.valueOf(pojo." + methName + "());";

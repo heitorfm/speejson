@@ -12,6 +12,10 @@ public class Property {
 
 	private Bytefier bytefier;
 	
+	private int depth;
+	
+	private String[] path;
+	
 	public Property(String name, byte[] key, Class<?> type, Bytefier bytefier) {
 		this.name = name;
 		this.key = key;
@@ -49,6 +53,22 @@ public class Property {
 
 	public void setBytefier(Bytefier<?> bytefier) {
 		this.bytefier = bytefier;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+	public String[] getPath() {
+		return path;
+	}
+
+	public void setPath(String[] path) {
+		this.path = path;
 	}
 	
 }

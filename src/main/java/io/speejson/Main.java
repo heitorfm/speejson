@@ -1,15 +1,58 @@
 package io.speejson;
 
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+
 import io.speejson.bytefier.LongBytefier;
+import net.sf.cglib.reflect.FastClass;
+import net.sf.cglib.reflect.FastMethod;
 
 //@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 
 public class Main {
 
 	public static void main(String[] argss) {
+		
+		
+		Address address = new Address();
+		address.setCity("London");
+		address.setCountry("United Kingdom");
+		address.setStreet("Main street");
+		address.setNumber(345);
+		address.setZipCode("1234-444");
+		
+		Person person = new Person();
+		person.setName("Afonso Silva");
+		person.setActive(true);
+		person.setAge(18);
+		person.setBirth(new Date());
+		person.setEmail("email@server.com");
+		person.setSalary(new BigDecimal(1500));
+		person.setTaxId("123345456");
+		//person.setAddress(address);
+		
+
+		
+		FastClass serviceFastClass = FastClass.create(Person.class);
+		FastMethod serviceFastMethod = serviceFastClass.getMethod("getAge", new Class[0]);
+		for (int f = 0; f < 30; f++) {
+			long ini3 = System.nanoTime();
+			Object o = null;
+			try {
+				o = serviceFastMethod.invoke(person, null);
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			
+			long end3 = System.nanoTime();
+			
+			System.out.println(o.getClass() + " " + (end3 - ini3) + " nanos  |  " +  TimeUnit.NANOSECONDS.toMicros(end3 - ini3) + " micros  |  " + TimeUnit.NANOSECONDS.toMillis(end3 - ini3) + " millis");
+		}
+		System.exit(1);
 		
 		Double d = 1.15;
 
