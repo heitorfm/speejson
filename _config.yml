@@ -3,7 +3,7 @@ theme: jekyll-theme-architect
 plugins:
   - jekyll-seo-tag
 
-image: /img/clock.png
+image: /img/banner.png
 title: Fast Json processing
 description: SpeeJson is a extreme high throughput java library for Json serialization and deserialization
 
@@ -11,4 +11,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: /img/clock.png
+      image: /img/banner.png
